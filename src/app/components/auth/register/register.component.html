@@ -1,0 +1,54 @@
+<form [formGroup]="form" autocomplete="off" (ngSubmit)="onSubmit()">
+    <div class="col-md-8">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" formControlName="name" placeholder="Enter username" class="form-control">
+            <label *ngIf="f.name.touched && f.name.invalid" class="text-danger">
+                    <span *ngIf="f.name.errors">Username is required.</span>
+                </label>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="form-group">
+            <label for="emaiil">Email</label>
+            <input type="text" formControlName="email" placeholder="Enter email address" class="form-control">
+            <label *ngIf="f.email.touched && f.email.invalid" class="text-danger">
+                    <span *ngIf="f.email.errors">Email is required.</span>
+                </label>
+            <!-- <small class="text-danger" [hidden]="!error">{{error}}</small> -->
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" formControlName="password" class="form-control">
+        </div>
+        <div *ngIf="f.password.touched && f.password.invalid ">
+            <label *ngIf=" f.password.errors" class="text-danger">Password is required.</label>
+            <label *ngIf="f.password.errors && !f.password.errors" class="text-warning">
+                    Password should contain atleast 6 characters
+                </label>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="form-group">
+            <label for="password_confirmation">Confirm Password</label>
+            <input type="password" formControlName="password_confirmation" placeholder="Confirm password" class="form-control" required>
+        </div>
+        <div *ngIf="f.password_confirmation.touched && f.password_confirmation.invalid" class="text-danger">
+
+            <div *ngIf="f.password_confirmation.errors">Password must match.</div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="form-group">
+            <button class="btn btn-primary rounded-0 mr-5" [disabled]="!form.valid" type="submit">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> SIGN UP
+            </button>
+            <button class="btn btn-warning rounded-0 ml-5" (click)="cancel()">Cancel SignUp</button>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <small>Already have an account?  <a class="ml-2" >Login here</a> </small>
+    </div>
+</form>

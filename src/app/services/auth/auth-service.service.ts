@@ -9,7 +9,8 @@ import {map} from 'rxjs/operators';
 })
 export class AuthServiceService {
   BASE_URL = environment.BASE_URL;
-  LOGIN_URL = 'auth/login'
+  LOGIN_URL = 'auth/login';
+  REGISTER_URL = 'auth/register';
   constructor(private http:HttpClient) { }
 
   loginUser(model:any){
@@ -22,5 +23,11 @@ export class AuthServiceService {
         }
       })
     )
+  }
+
+  registerUser(form:any){
+    return this.http.post(`${this.BASE_URL}${this.REGISTER_URL}`, form).pipe(
+      map((res:any) => res)
+    );
   }
 }
