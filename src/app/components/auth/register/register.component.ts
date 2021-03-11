@@ -1,7 +1,10 @@
-import { AuthServiceService } from './../../../services/auth/auth-service.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ConfirmedValidator } from 'src/app/helpers/confirmed.validator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { ConfirmedValidator } from 'src/app/helpers/confirmed.validator';
+
+import { AlertifyService } from './../../../services/alertify/alertify.service';
+import { AuthServiceService } from './../../../services/auth/auth-service.service';
 
 
 
@@ -14,8 +17,9 @@ export class RegisterComponent implements OnInit {
  form: FormGroup = new FormGroup({});
  loading = false;
  submitted = false;
+ public error = null;
  @Output() cancelRegister = new EventEmitter
-  constructor(private formBuilder: FormBuilder, private auth:AuthServiceService) { 
+  constructor(private formBuilder: FormBuilder, private auth:AuthServiceService, private alerts:AlertifyService) { 
     this.form = this.formBuilder.group({
       'name': ['', Validators.required],
       'email': ['', [Validators.required, Validators.email]],
@@ -34,23 +38,40 @@ export class RegisterComponent implements OnInit {
     this.cancelRegister.emit(false);
   }
 
+  handleError(error:any){
+    this.error = error.error.errors;
+  }
+
   onSubmit(){
     this.submitted = true;
     this.loading = true;
     if(this.form.invalid){
-      this.loading = false
       return;
+    }else{
+      this.auth.registerUser(this.form.value).subscribe(
+        data => {
+          console.log(data);
+          setTimeout(() => {
+            this.alerts.success('Registration is successfull')
+          }, 1000);
+        },
+        error => {
+          // this.handleError(error)
+          this.alerts.error('Email has already been taken');
+          this.loading = false;
+        }
+      );
     }
     
-    this.auth.registerUser(this.form.value).subscribe(
-      data => {
-        console.log(data);
-        console.log('registration is successful');
-      }, error=>{
-        console.log('Registration has failed');
-      }
-    )
-    console.log('THE FORM HAS BEEN SUBMITTED')
+    // this.auth.registerUser(this.form.value).subscribe(
+    //   data => {
+    //     // console.log(data);
+    //     this.alerts.success('registration is successful');
+    //   }, error=>{
+    //     this.alerts.error(error.error.message);
+    //   }
+    // )
+    // console.log('THE FORM HAS BEEN SUBMITTED')
   }
 
   ngOnInit(): void {
