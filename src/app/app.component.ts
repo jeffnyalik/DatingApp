@@ -1,5 +1,9 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { AuthServiceService } from './services/auth/auth-service.service';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +11,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   data_info:any = [];
   title = 'datingapp';
+  jwtHelper = new JwtHelperService;
 
-  constructor(private http:HttpClient){
-    this.http.get('http://127.0.0.1:8000/api/fake-data/faker').subscribe(data =>{
-      this.data_info = data;
-      console.log(this.data_info);
-    }, error=>console.log(error));
+  constructor(private auth:AuthServiceService){
+  }
+  ngOnInit(){
   }
 }

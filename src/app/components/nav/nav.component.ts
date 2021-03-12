@@ -10,9 +10,13 @@ import { AuthServiceService } from './../../services/auth/auth-service.service';
 })
 export class NavComponent implements OnInit {
   model: any = {};
-  constructor(private authService: AuthServiceService, private alerts: AlertifyService) { }
+  user: any = [];
+  constructor(public authService: AuthServiceService, private alerts: AlertifyService) { }
 
   ngOnInit(): void {
+    this.authService.getUser().subscribe(data => {
+      this.user = data;
+    })
   }
 
   login(){
@@ -20,18 +24,19 @@ export class NavComponent implements OnInit {
       data =>{
         this.alerts.success('Logged in successfully');
       }, error=>{
-        this.alerts.error(error);
+        this.alerts.error('Invalid email or password');
       }
     )
   }
+
   
   loggedIn(){
-    const token = localStorage.getItem('token');
-    return !!token;
+    return this.authService.loggedIn();
   }
 
   logOut(){
     localStorage.removeItem('token');
+    window.sessionStorage.clear();;
     this.alerts.success('Logged out successfully');
   }
 
