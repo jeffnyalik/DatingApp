@@ -9,8 +9,12 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { AuthGuard } from './_guards/auth.guard';
 import { JwtInterceptor } from './errors/error.interceptor';
 import { HomeComponent } from './components/home/home.component';
+import { ListComponent } from './components/list/list.component';
+import { MemberListComponent } from './components/member-list/member-list.component';
+import { MessagesComponent } from './components/messages/messages.component';
 import { NavComponent } from './components/nav/nav.component';
 import { AlertifyService } from './services/alertify/alertify.service';
 import { AuthServiceService } from './services/auth/auth-service.service';
@@ -24,6 +28,9 @@ import { RegisterComponent } from './components/auth/register/register.component
     NavComponent,
     HomeComponent,
     RegisterComponent,
+    MemberListComponent,
+    ListComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +45,7 @@ import { RegisterComponent } from './components/auth/register/register.component
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     AlertifyService,
+    AuthGuard,
     AuthServiceService, {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
