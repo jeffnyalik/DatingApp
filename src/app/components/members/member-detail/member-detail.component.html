@@ -1,9 +1,68 @@
-<div class="container">
-    <!-- <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div *ngIf="user">{{user.city}}, {{user.id}}</div> -->
+<hr>
+<hr>
+<div class="container mt-5">
+    <div class="row">
+        <h4 style="font-family: 'Times New Roman', Times, serif; margin-left:20px;">{{user.name}}'s Profile</h4>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card rounded-0">
+                <img class="card-img-top img-thumbnail" src="{{user?.image}}" alt="{{user?.known_as}}">
+                <div class="card-body">
+                    <div>
+                        <strong>Location:</strong>
+                        <p>{{user?.city}}, {{user?.countries.name}}</p>
+                    </div>
+                    <div>
+                        <strong>Age:</strong>
+                        <p>{{user?.age}}</p>
+                    </div>
+                    <div>
+                        <strong>Last Active</strong>
+                        <p>{{user?.last_active}}</p>
+                    </div>
+                    <div>
+                        <strong>Member Since</strong>
+                        <p>{{user?.created_at}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="btn-group d-flex">
+                            <button class="btn btn-primary btn-sm rounded-0 w-100">Like</button>
+                            <button class="btn btn-success btn-sm rounded-0 w-100">Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="tab-panel">
+                <tabset class="member-tabset">
+                    <tab heading="About">
+                        <h4>Description</h4>
+                        <p>{{user?.bio}}</p>
+                        <h4>Looking For</h4>
+                        <p>{{user?.looking_for}}</p>
+                    </tab>
+                    <tab heading="Interests">
+                        <h4>Interests</h4>
+                        <p>{{user?.interests}}</p>
+                    </tab>
+                    <tab heading="Photos">
+                        <h4>Photos</h4>
+                        <br/>
+                        <div class="col-sm-7 d-flex" style="align-content: flex-end;">
+                            <carousel>
+                                <slide *ngFor="let item of user?.photos">
+                                    <img src="{{item.photos}}" alt="first slide" style="display: block; width: 100%;">
+                                </slide>
+                            </carousel>
+                        </div>
+                    </tab>
+                    <tab heading="Messages">
+                        <h4>Messages</h4>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+    </div>
 </div>

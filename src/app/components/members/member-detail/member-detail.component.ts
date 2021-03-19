@@ -1,8 +1,12 @@
-import { UserService } from './../../../services/users/user.service';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../../_models/user/user';
-import { AlertifyService } from 'src/app/services/alertify/alertify.service';
 import { ActivatedRoute } from '@angular/router';
+
+import { AlertifyService } from 'src/app/services/alertify/alertify.service';
+
+import { User } from '../../../_models/user/user';
+import { UserService } from './../../../services/users/user.service';
+
 
 @Component({
   selector: 'app-member-detail',
@@ -10,9 +14,10 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit {
-  user: any
+  user: any;
   constructor(private userServ: UserService, 
-    private alerts: AlertifyService, 
+    private alerts: AlertifyService,
+    private http:HttpClient,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -24,6 +29,10 @@ export class MemberDetailComponent implements OnInit {
     .subscribe((user: User[]) => {
       this.user = user;
       console.log(this.user);
+
+      // this.userServ.getPhotos().subscribe(data =>{
+      //   console.log(data);
+      // });
     },error => this.alerts.error(error));
   }
 
