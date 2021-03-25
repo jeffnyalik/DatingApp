@@ -17,7 +17,7 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getUser().subscribe(data => {
       this.user = data;
-      // console.log(this.user);
+      console.log(this.user);
     })
   }
 

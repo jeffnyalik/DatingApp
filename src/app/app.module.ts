@@ -12,6 +12,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { AuthGuard } from './_guards/auth.guard';
+import { PreventClassUnsavedChanges } from './_guards/prevent_unsaved_changes_guard';
+import { MemberDetailResolver } from './_resolvers/member-detail.resolvers';
+import { MemberListResolver } from './_resolvers/member-list-resolvers';
 import { JwtInterceptor } from './errors/error.interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { ListComponent } from './components/list/list.component';
@@ -20,6 +23,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { AlertifyService } from './services/alertify/alertify.service';
 import { AuthServiceService } from './services/auth/auth-service.service';
 import { RegisterComponent } from './components/auth/register/register.component';
+import { EditProfileComponent } from './components/members/edit-profile/edit-profile.component';
 import { MemberCardComponent } from './components/members/member-card/member-card.component';
 import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
 import { MemberListComponent } from './components/members/member-list/member-list.component';
@@ -37,6 +41,7 @@ import { MemberListComponent } from './components/members/member-list/member-lis
     MessagesComponent,
     MemberCardComponent,
     MemberDetailComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +50,7 @@ import { MemberListComponent } from './components/members/member-list/member-lis
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    // BsDatepickerModule.forRoot(),
     CarouselModule.forRoot(),
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
@@ -54,6 +60,9 @@ import { MemberListComponent } from './components/members/member-list/member-lis
   providers: [
     AlertifyService,
     AuthGuard,
+    MemberDetailResolver,
+    MemberListResolver,
+    PreventClassUnsavedChanges,
     AuthServiceService, {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

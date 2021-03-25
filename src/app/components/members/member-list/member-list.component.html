@@ -6,7 +6,7 @@
             <div class="card rounded-0">
                 <div class="card-img-wrapper">
 
-                    <img src="{{user.image}}" class="card-img-top align-center" alt="..." [routerLink]="['/member/', user.id]" routerLinkActive="router-link-active" style="cursor: pointer;">
+                    <img src="{{user.image || '../../../../../../assets/img/users.png'}}" class="card-img-top align-center" alt="..." [routerLink]="['/member/', user.id]" routerLinkActive="router-link-active" style="cursor: pointer;">
 
                 </div>
                 <div class="card-body">

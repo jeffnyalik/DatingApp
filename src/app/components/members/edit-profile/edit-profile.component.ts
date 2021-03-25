@@ -1,0 +1,104 @@
+import { Router } from '@angular/router';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { AlertifyService } from './../../../services/alertify/alertify.service';
+import { UserService } from './../../../services/users/user.service';
+
+@Component({
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.css']
+})
+export class EditProfileComponent implements OnInit {
+  formModel: FormGroup = new FormGroup({});
+  @ViewChild('editForm') editForm:any = NgForm;
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any){
+    if(this.editForm.dirty){
+      $event.returnValue = true
+    }
+  }
+  public user: any = [];
+  public countries: any;
+  public genders: any;
+  public imagSrc: string = '';
+  selectedFile:any = File;
+  constructor(private authUser: UserService, private alerts: AlertifyService, 
+    private router: Router,
+    private fb: FormBuilder) {
+    this.formModel =  this.fb.group({
+       city: [''],
+       name: [''],
+       age: [''],
+       image: [''],
+       username: [''],
+       knownAs: [''],
+       known_as: [''],
+       bio: [''],
+       looking_for: [''],
+       interests: [''],
+       language: [''],
+       country_id: [''],
+       gender_id: '',
+       dob: Date,
+    });
+  }
+
+  onSelectImage(event:any){
+    if(event.target.files.length > 0){
+      const file = event.target.files[0];
+      this.formModel.get('image')?.setValue(file);
+      console.log(file);
+    }
+  }
+
+  ngOnInit(): void {
+    this.authUser.getProfile().subscribe((data) => {
+      this.user = data;
+      console.log(this.user);
+
+      //get genders and countries;
+
+      this.authUser.getCountries().subscribe(data => 
+        {
+          this.countries = data
+          console.log(this.countries);
+        }, error=>{console.log(error)});
+      this.authUser.getGenders().subscribe(data => 
+        {
+          this.genders = data;
+          console.log(this.genders);
+        }, error=>{console.log(error)});
+    })
+  }
+
+  updateUser(){
+    let formData = new FormData();
+    // formData.append('image', this.selectedFile, this.selectedFile.name);
+    formData.append('image', this.formModel.get('image')!.value);
+    formData.append('name', this.formModel.get('name')!.value);
+    formData.append('city', this.formModel.get('city')!.value);
+    formData.append('known_as', this.formModel.get('known_as')!.value);
+    formData.append('bio', this.formModel.get('bio')!.value);
+    formData.append('looking_for', this.formModel.get('looking_for')!.value);
+    formData.append('interests', this.formModel.get('interests')!.value);
+    formData.append('language', this.formModel.get('language')!.value);
+    formData.append('country_id', this.formModel.get('country_id')!.value);
+    formData.append('gender_id', this.formModel.get('gender_id')!.value);
+    formData.append('age', this.formModel.get('age')!.value);
+    formData.append('dob', this.formModel.get('dob')!.value);
+    
+    this.authUser.updateProfiile(formData).subscribe(data =>{
+      this.alerts.success('Profile updated successfully.');
+      this.editForm.reset(this.user);
+      this.router.navigate(['/members']);
+    }, error=>{
+      this.alerts.error('An error has ocurred');
+    });
+    
+  }
+
+  
+
+}

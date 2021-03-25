@@ -13,6 +13,10 @@ export class UserService {
   BASE_URL = environment.BASE_URL;
   USERS_URL = 'auth/users';
   USER_URL = 'auth/user';
+  USER_PROFILE = 'auth/profile';
+  UPDATE_PROFILE = 'auth/update-profile';
+  COUNTRY_URL = 'user/countries';
+  GENDER_URL = 'user/genders';
   PHOTOS_URL = 'user/photos';
   headers = new HttpHeaders().set('Authorization', 'Bearer' + localStorage.getItem('token'));
   constructor(private http: HttpClient) { }
@@ -26,8 +30,27 @@ export class UserService {
  {
    return this.http.get<User[]>(`${this.BASE_URL}${this.USER_URL}/` + id);
  }
+ 
+ getProfile(): Observable<User[]>
+ {
+   return this.http.get<User[]>(`${this.BASE_URL}${this.USER_PROFILE}`);
+ }
  getPhotos(){
    return this.http.get(`${this.BASE_URL}${this.PHOTOS_URL}`);
+ }
+
+ updateProfiile(formData: any): Observable<any>{
+   return this.http.post(`${this.BASE_URL}${this.UPDATE_PROFILE}`, formData);
+ }
+
+ // get countries;
+ getCountries(){
+   return this.http.get(`${this.BASE_URL}${this.COUNTRY_URL}`);
+ }
+
+  // get genders;
+ getGenders(){
+   return this.http.get(`${this.BASE_URL}${this.GENDER_URL}`);
  }
 
 }

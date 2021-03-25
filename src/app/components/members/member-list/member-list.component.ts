@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { User } from '../../../_models/user/user';
@@ -11,21 +12,23 @@ import { UserService } from '../../../services/users/user.service';
 })
 export class MemberListComponent implements OnInit {
   users: User[] = [];
-  constructor(private authuser: UserService, private alerts: AlertifyService) {
+  constructor(private authuser: UserService, private alerts: AlertifyService, private route: ActivatedRoute) {
    }
 
   ngOnInit(): void {
-   this.loadUsers();
+   this.route.data.subscribe(data =>{
+     this.users = data['users'];
+   })
   }
 
-  loadUsers(){
-    this.authuser.getUsers().subscribe((users: User[]) => {
-      this.users = users;
-      console.log(this.users);
-    }, error => {
-      console.log(error);
-      this.alerts.error('Unauthenticated');
-    });
-  }
+  // loadUsers(){
+  //   this.authuser.getUsers().subscribe((users: User[]) => {
+  //     this.users = users;
+  //     console.log(this.users);
+  //   }, error => {
+  //     console.log(error);
+  //     this.alerts.error('Unauthenticated');
+  //   });
+  // }
 
 }
