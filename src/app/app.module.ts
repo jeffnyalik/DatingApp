@@ -27,7 +27,8 @@ import { EditProfileComponent } from './components/members/edit-profile/edit-pro
 import { MemberCardComponent } from './components/members/member-card/member-card.component';
 import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
 import { MemberListComponent } from './components/members/member-list/member-list.component';
-
+// import { PaginationModule } from 'ngx-bootstrap/pagination';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -50,7 +51,10 @@ import { MemberListComponent } from './components/members/member-list/member-lis
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgxPaginationModule,
     // BsDatepickerModule.forRoot(),
+
+    // PaginationModule.forRoot(),
     CarouselModule.forRoot(),
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
