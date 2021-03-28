@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertifyService } from 'src/app/services/alertify/alertify.service';
 
 import { User } from '../../../_models/user/user';
+import { AuthServiceService } from './../../../services/auth/auth-service.service';
 import { UserService } from './../../../services/users/user.service';
 
 
@@ -15,8 +16,16 @@ import { UserService } from './../../../services/users/user.service';
 })
 export class MemberDetailComponent implements OnInit {
   user: any;
+  phoneNumber: boolean = false;
+  emailAddress: boolean = false;
+  slideChangeMessage = '';
+
+  log(event: number) {
+    this.slideChangeMessage = `Image has been switched: ${event}`;
+  }
   constructor(private userServ: UserService, 
     private alerts: AlertifyService,
+    private auth: AuthServiceService,
     private http:HttpClient,
     private route: ActivatedRoute) { }
 
@@ -25,6 +34,18 @@ export class MemberDetailComponent implements OnInit {
       this.user = data['user'];
       console.log(this.user);
     });
+  }
+
+  showEmail(){
+    this.emailAddress =!this.emailAddress;
+  }
+
+  showPhone(){
+    console.log('Phone number');
+  }
+
+  loggedIn(){
+    return this.auth.loggedIn();
   }
 
   // loadUser(){

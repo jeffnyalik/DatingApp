@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ReadVarExpr } from '@angular/compiler';
+import { __core_private_testing_placeholder__ } from '@angular/core/testing';
 
 import { AlertifyService } from './../../../services/alertify/alertify.service';
 import { UserService } from './../../../services/users/user.service';
@@ -20,12 +23,15 @@ export class EditProfileComponent implements OnInit {
     }
   }
   public user: any = [];
+  urls: any = [];
+  file: any;
   public countries: any;
   public genders: any;
   public imagSrc: string = '';
-  selectedFile:any = File;
+
   constructor(private authUser: UserService, private alerts: AlertifyService, 
     private router: Router,
+    private http:HttpClient,
     private fb: FormBuilder) {
     this.formModel =  this.fb.group({
        city: [''],
@@ -41,19 +47,24 @@ export class EditProfileComponent implements OnInit {
        language: [''],
        country_id: [''],
        gender_id: '',
+
+      // photos parameter
+      caption: [''],
+      photos: [''],
        dob: Date,
     });
   }
-
+ 
   onSelectImage(event:any){
     if(event.target.files.length > 0){
       const file = event.target.files[0];
-      this.formModel.get('image')?.setValue(file);
+      this.formModel.get('image')!.setValue(file);
       console.log(file);
     }
   }
 
   ngOnInit(): void {
+    
     this.authUser.getProfile().subscribe((data) => {
       this.user = data;
       console.log(this.user);
@@ -71,6 +82,24 @@ export class EditProfileComponent implements OnInit {
           console.log(this.genders);
         }, error=>{console.log(error)});
     })
+  }
+
+ 
+  selectFiles(event: any){
+    if(event.target.files){
+      for(let i = 0; i<event.target.files.length; i++){
+        // this.file = event.target.files[i];
+        this.urls.push(event.target.files[i]);
+  
+        const reader = new FileReader();
+        reader.readAsDataURL(event.target.files[i]);
+          reader.onload = (event: any) =>{
+            this.urls.push(event.target.result);
+            this.formModel.get('photos')!.setValue(this.urls);
+          }
+      }
+      console.log(this.urls);
+    }
   }
 
   updateUser(){
@@ -99,6 +128,30 @@ export class EditProfileComponent implements OnInit {
     
   }
 
-  
+
+  /**
+   * Add photos to the database;
+   * 
+   */
+  addGallery(){
+    let fd = new FormData();
+    for (let i = 0; i < this.urls.length; i++) { 
+      fd.append("photos[]", this.urls[i]);
+    }
+    fd.append('caption', this.formModel.get('caption')!.value);
+    // this.http.post<any>('http://127.0.0.1:8000/api/user/add_photos', fd).subscribe(
+    //   (res) => console.log(res),
+    //   (err) => console.log(err)
+    // );
+    
+    this.authUser.addPhotos(fd).subscribe(data =>{
+      this.alerts.success('Uploaded Successfully.');
+      this.router.navigate(['/members'])
+      console.log(data);
+    }, error =>{
+      this.alerts.error('An error has occured');
+      console.log(error);
+    });
+  }
 
 }

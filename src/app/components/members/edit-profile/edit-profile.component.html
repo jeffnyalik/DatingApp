@@ -149,10 +149,28 @@
                             </div>
                         </form>
                     </tab>
+                    <tab heading="Add Gallery">
+                        <hr>
+                        <form [formGroup]="formModel" enctype="multipart/form-data" (ngSubmit)="addGallery()">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label for="">Upload Your Images</label>
 
-                    <tab heading="Gallery Photos ">
-                        <h4>My Gallery</h4>
-                        <!-- <p>{{user?.interests}}</p> -->
+                                    <input type="file" class="form-control" name="photos" accept="image/*" (change)="selectFiles($event)" multiple>
+                                </div>
+                                <div class="col-md-5">
+                                    <label>Caption</label>
+                                    <input type="text" formControlName="caption" class="form-control" placeholder="Image Caption">
+                                </div>
+                            </div>
+                            <!-- <div class="col-xs-4">
+                                <img class="img-thumbnail" *ngFor="let item of urls.data" [src]="item" style="width:200px;" />
+                            </div> -->
+                            <hr>
+                            <div class="col-md-5">
+                                <button class="btn btn-primary rounded-0">Upload...</button>
+                            </div>
+                        </form>
                     </tab>
                 </tabset>
             </div>

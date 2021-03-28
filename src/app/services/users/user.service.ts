@@ -18,6 +18,7 @@ export class UserService {
   COUNTRY_URL = 'user/countries';
   GENDER_URL = 'user/genders';
   PHOTOS_URL = 'user/photos';
+  ADD_PHOTOS = 'user/add_photos';
   headers = new HttpHeaders().set('Authorization', 'Bearer' + localStorage.getItem('token'));
   constructor(private http: HttpClient) { }
 
@@ -51,6 +52,11 @@ export class UserService {
   // get genders;
  getGenders(){
    return this.http.get(`${this.BASE_URL}${this.GENDER_URL}`);
+ }
+
+ //add photos
+ addPhotos(formData:any):Observable<any>{
+   return this.http.post(`${this.BASE_URL}${this.ADD_PHOTOS}`, formData);
  }
 
 }

@@ -17,3 +17,8 @@
 h4 {
     font-family: 'Times New Roman', Times, serif;
 }
+
+.my_img {
+    min-height: fit-content;
+    height: 500px;
+}

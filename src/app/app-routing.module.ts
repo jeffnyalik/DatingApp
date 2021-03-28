@@ -1,14 +1,13 @@
-import { MemberListResolver } from './_resolvers/member-list-resolvers';
-import { MemberDetailResolver } from './_resolvers/member-detail.resolvers';
-import { User } from './_models/user/user';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventClassUnsavedChanges } from './_guards/prevent_unsaved_changes_guard';
+import { MemberDetailResolver } from './_resolvers/member-detail.resolvers';
+import { MemberListResolver } from './_resolvers/member-list-resolvers';
+import { GalleryComponent } from './components/gallery/gallery.component';
 import { HomeComponent } from './components/home/home.component';
-import { ListComponent } from './components/list/list.component';
-import { MessagesComponent } from './components/messages/messages.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { EditProfileComponent } from './components/members/edit-profile/edit-profile.component';
 import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
 import { MemberListComponent } from './components/members/member-list/member-list.component';
@@ -23,12 +22,13 @@ const routes: Routes = [
       {path: 'members', component: MemberListComponent, resolve: {users: MemberListResolver}},
       {path: 'member/:id', component: MemberDetailComponent, resolve: {user: MemberDetailResolver} },
       {path: 'member-edit', component: EditProfileComponent, canDeactivate: [PreventClassUnsavedChanges]},
-      {path: 'messages', component: MessagesComponent},
-      {path: 'list', component: ListComponent},
+      // {path: 'messages', component: MessagesComponent},
+      {path: 'photos', component: GalleryComponent},
     ]
   },
+  {path: 'not-found', component: NotFoundComponent},
 
-  {path: '**', redirectTo: '', pathMatch: 'full'}
+  {path: '**', redirectTo: 'not-found', pathMatch: 'full'}
 ];
 
 @NgModule({

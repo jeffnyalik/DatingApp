@@ -1,15 +1,9 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container">
-        <a class="navbar-brand" style="font-family: 'Times New Roman', Times, serif;" [routerLink]="['/home']">DatingApp</a>
+        <a class="navbar-brand" style="font-family: 'Times New Roman', Times, serif;">DatingApp</a>
         <ul class="navbar-nav mr-auto" *ngIf="loggedIn()">
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['/members']" style="font-family: 'Times New Roman', Times, serif;">Matches</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/list']" routerLinkActive="router-link-active" style="font-family: 'Times New Roman', Times, serif;">Lists</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/messages']" style="font-family: 'Times New Roman', Times, serif;">Messages</a>
             </li>
         </ul>
 
@@ -26,7 +20,18 @@
                     <a class="dropdown-item" [routerLink]="['/member-edit']" routerLinkActive="router-link-active"> <i class="fa fa-user"></i> Edit Profile</a>
                 </li>
                 <div class="dropdown-divider"></div>
-                <li><a class="dropdown-item" (click)="logOut()" style="cursor: pointer;">Logout</a></li>
+                <li>
+                    <a class="dropdown-item" [routerLink]="['/photos']" routerLinkActive="router-link-active">
+                        <i class="fa fa-photo"></i> Gallery
+                    </a>
+                </li>
+
+                <div class="dropdown-divider"></div>
+                <li>
+                    <a class="dropdown-item" (click)="logOut()" style="cursor: pointer;">
+                        <i class="fa fa-power-off"></i> Logout
+                    </a>
+                </li>
             </ul>
         </div>
 

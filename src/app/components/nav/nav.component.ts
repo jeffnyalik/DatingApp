@@ -19,6 +19,10 @@ export class NavComponent implements OnInit {
       this.user = data;
       console.log(this.user);
     })
+
+    if(!this.authService.loggedIn){
+      this.route.navigate(['/']);
+    }
   }
 
   login(){
@@ -40,7 +44,7 @@ export class NavComponent implements OnInit {
   logOut(){
     localStorage.removeItem('token');
     this.alerts.success('Logged out successfully');
-    this.route.navigate(['/home']);
+    this.route.navigate(['']);
   }
 
 }

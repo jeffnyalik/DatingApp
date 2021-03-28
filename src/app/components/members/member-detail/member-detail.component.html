@@ -26,10 +26,14 @@
                         <p>{{user.created_at}}</p>
                     </div>
                     <div class="card-footer">
+                        <h4 *ngIf="emailAddress">{{user.email}}</h4>
                         <div class="btn-group d-flex">
-                            <button class="btn btn-primary btn-sm rounded-0 w-100">Like</button>
-                            <button class="btn btn-success btn-sm rounded-0 w-100">Message</button>
+                            <button class="btn btn-primary btn-sm rounded-0 w-100" (click)="showEmail()">
+                                <i class="fa fa-envelope"></i>
+                                Email
+                            </button>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -50,17 +54,24 @@
                     <tab heading="Photos">
                         <h4>Photos</h4>
                         <br/>
+                        <carousel (activeSlideChange)="log($event)" [interval]="0">
+                            <slide *ngFor="let slide of user.photos; let index=index">
+                                <div>
+                                    <img class="my_img" src="{{slide.photos}}" alt="image slide" style="display: block; width: 100%;">
+
+                                    <div class="carousel-caption">
+                                        <h4> {{slide.caption}}</h4>
+                                    </div>
+                                </div>
+
+                            </slide>
+                        </carousel>
+                        <br/>
+                        <pre class="card card-block card-header">{{slideChangeMessage}}</pre>
                         <div class="col-sm-7 d-flex" style="align-content: flex-end;">
-                            <carousel>
-                                <slide *ngFor="let item of user.photos">
-                                    <img src="{{item.photos}}" alt="first slide" style="display: block; width: 100%;">
-                                </slide>
-                            </carousel>
                         </div>
                     </tab>
-                    <tab heading="Messages">
-                        <h4>Messages</h4>
-                    </tab>
+
                 </tabset>
             </div>
         </div>

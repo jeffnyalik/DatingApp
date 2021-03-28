@@ -8,6 +8,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 
+import {NgxPaginationModule} from 'ngx-pagination';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -17,7 +19,6 @@ import { MemberDetailResolver } from './_resolvers/member-detail.resolvers';
 import { MemberListResolver } from './_resolvers/member-list-resolvers';
 import { JwtInterceptor } from './errors/error.interceptor';
 import { HomeComponent } from './components/home/home.component';
-import { ListComponent } from './components/list/list.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { NavComponent } from './components/nav/nav.component';
 import { AlertifyService } from './services/alertify/alertify.service';
@@ -27,8 +28,8 @@ import { EditProfileComponent } from './components/members/edit-profile/edit-pro
 import { MemberCardComponent } from './components/members/member-card/member-card.component';
 import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
 import { MemberListComponent } from './components/members/member-list/member-list.component';
-// import { PaginationModule } from 'ngx-bootstrap/pagination';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -38,11 +39,12 @@ import {NgxPaginationModule} from 'ngx-pagination';
     HomeComponent,
     RegisterComponent,
     MemberListComponent,
-    ListComponent,
     MessagesComponent,
     MemberCardComponent,
     MemberDetailComponent,
     EditProfileComponent,
+    GalleryComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,9 +54,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
-    // BsDatepickerModule.forRoot(),
-
-    // PaginationModule.forRoot(),
     CarouselModule.forRoot(),
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
