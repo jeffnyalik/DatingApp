@@ -23,7 +23,9 @@ export class RegisterComponent implements OnInit {
  public error = null;
  genders:any;
  countries: any;
- user: any
+ user: any;
+ public genderSelected: number;
+ public countrySelected: number;
  @Output() cancelRegister = new EventEmitter
   constructor(private formBuilder: FormBuilder, private auth:AuthServiceService,
      private router: Router,
@@ -40,7 +42,10 @@ export class RegisterComponent implements OnInit {
       'country_id': ['']
     }, {
       validator: ConfirmedValidator('password', 'password_confirmation')
-    })
+    });
+   
+    this.genderSelected = 1;
+    this.countrySelected = 1;
   }
 
   get f(){
@@ -74,6 +79,7 @@ export class RegisterComponent implements OnInit {
         error => {
           // this.handleError(error)
           this.alerts.error('Email has already been taken');
+          console.log(error);
           this.loading = false;
         }
       );
@@ -92,5 +98,6 @@ export class RegisterComponent implements OnInit {
       console.log(this.genders);
     });
   }
+
 
 }

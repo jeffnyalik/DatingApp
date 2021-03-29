@@ -28,6 +28,8 @@ export class EditProfileComponent implements OnInit {
   public countries: any;
   public genders: any;
   public imagSrc: string = '';
+  public genderSelected: number
+  public countrySelected: number;
 
   constructor(private authUser: UserService, private alerts: AlertifyService, 
     private router: Router,
@@ -46,13 +48,15 @@ export class EditProfileComponent implements OnInit {
        interests: [''],
        language: [''],
        country_id: [''],
-       gender_id: '',
+       gender_id: [''],
 
       // photos parameter
       caption: [''],
       photos: [''],
        dob: Date,
     });
+    this.genderSelected =1;
+    this.countrySelected =1;
   }
  
   onSelectImage(event:any){
@@ -122,6 +126,7 @@ export class EditProfileComponent implements OnInit {
       this.alerts.success('Profile updated successfully.');
       this.editForm.reset(this.user);
       this.router.navigate(['/members']);
+      window.location.reload();
     }, error=>{
       this.alerts.error('An error has ocurred');
     });

@@ -38,7 +38,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="emaiil">Country</label>
-                <select formControlName="country_id" class="form-control">
+                <select formControlName="country_id" class="form-control" [(ngModel)]="countrySelected" required>
                     <option value="0">--Select--</option>
                     <option value="{{cont.id}}" *ngFor="let cont of countries">{{cont.name}}</option>
                 </select>
@@ -48,7 +48,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="Gender">Gender</label>
-                <select formControlName="gender_id" class="form-control">
+                <select formControlName="gender_id" class="form-control" [(ngModel)]="genderSelected" required>
                     <option value="0">--Select--</option>
                     <option value="{{item.id}}" *ngFor="let item of genders">{{item.gender_name}}</option>
                 </select>

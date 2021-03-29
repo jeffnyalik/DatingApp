@@ -55,7 +55,7 @@
 
                     <div>
                         <strong>Member Since</strong>
-                        <p>{{user?.createdAt | date}}</p>
+                        <p>{{user?.createdAt | date: 'dd/MM/yyyy'}}</p>
                     </div>
                     <div class="card-footer">
                         <button form="editForm" [disabled]="!editForm.dirty" class="btn btn-success btn-block rounded-0 ">Save Changes</button>
@@ -105,7 +105,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="Country">Country</label>
-                                            <select class="form-control" formControlName="country_id" [(ngModel)]="user.country_id">
+                                            <select class="form-control" formControlName="country_id" [(ngModel)]="countrySelected">
                                             <option *ngFor="let cont of countries" value="{{cont.id}}">
                                                 {{cont.name}}
                                             </option>
@@ -122,11 +122,12 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="Gender">Gender</label>
-                                            <select class="form-control" [(ngModel)]="user.gender_id" formControlName="gender_id">
-                                                <option *ngFor="let item of genders" value="{{item.id}}">
+                                            <select class="form-control" [(ngModel)]="genderSelected" formControlName="gender_id">
+                                                <option *ngFor="let item of genders" [value]="item.id">
                                                     {{item.gender_name}}
                                                 </option>
                                             </select>
+
                                         </div>
                                     </div>
                                     <div class="col-md-4">

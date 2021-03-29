@@ -30,6 +30,7 @@ export class NavComponent implements OnInit {
       data =>{
         this.alerts.success('Logged in successfully');
         this.route.navigate(['/members'])
+        window.location.reload();
       }, error=>{
         this.alerts.error('Invalid email or password');
       }
